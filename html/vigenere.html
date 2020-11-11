@@ -1,0 +1,64 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vigenere Cipher</title>
+</head>
+<body>
+   <h1>Vigenere Cipher</h1> 
+   <p>This is a primitive cipher the basic idea of this cipher is that it performs a caesar cipher for each character of the key.  </p>
+   <p>
+        The cipher follows the following formulas for encryption and decryption:<br/>
+        E(p,k) = (p+k) mod 26<br/>
+        D(c,k) = (c-k) mod 26
+   </p>   
+   <div>
+        <label for="plaintext">Message:</label>
+        <input type="text" name = "plaintext" id="plaintext">
+        <label for="key">Key:</label>
+        <input type="text" name = "key" id="key">
+
+        <button onclick="encrypt()">Encrypt</button>
+        <button onclick="decrypt()">Decrypt</button>
+
+        <textarea name="output" id="output" cols="30" rows="10" readonly></textarea>
+        <button onclick="copyText()">Copy</button>
+   </div>
+   <p><a href="../index.html">Back to home page</a></p>
+<script src="../js/classic.js"></script>
+<script>
+    const encrypt = ()=>{
+        document.getElementById('output').value = '';
+        const plaintext = document.getElementById('plaintext');
+        const key = document.getElementById('key');
+        var result = '';
+        try{
+           result = vigenereCipherEncrypt(plaintext.value,key.value);
+        }
+        catch(err){
+
+        }
+        document.getElementById('output').value = result;
+    }
+    const decrypt = () => {
+        document.getElementById('output').value = '';
+        const plaintext = document.getElementById('plaintext');
+        const key = document.getElementById('key');
+        var result = '';
+        try{
+           result = vigenereCipherDecrypt(plaintext.value,key.value);
+        }
+        catch(err){
+
+        }
+        document.getElementById('output').value = result;
+    }
+    const copyText = ()=>{
+        var output = document.getElementById('output');
+        output.enabled = true;
+        output.select();
+        document.execCommand("copy");
+    }
+</script>
+</body>
+</html>
