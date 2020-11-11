@@ -1,0 +1,66 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caesar Cipher</title>
+</head>
+<body>
+   <h1>Caesar Cipher</h1> 
+   <p>This is a primitive cipher the basic idea of this cipher is to shift the input characters of the plaintext 
+       by the shift amount.
+   </p>
+   <p>
+        The cipher follows the following formulas for encryption and decryption:<br/>
+        E(p,n) = (p+n) mod 26<br/>
+        D(c,n) = (c-n) mod 26
+   </p>   
+   <div>
+        <label for="plaintext">Message:</label>
+        <input type="text" name = "plaintext" id="plaintext">
+        <label for="shift_amount">Shift Amount:</label>
+        <input type="text" name = "shift_amount" id="shift_amount">
+
+        <button onclick="encrypt()">Encrypt</button>
+        <button onclick="decrypt()">Decrypt</button>
+
+        <textarea name="output" id="output" cols="30" rows="10" readonly></textarea>
+        <button onclick="copyText()">Copy</button>
+   </div>
+   <p><a href="../index.html">Back to home page</a></p>
+<script src="../js/classic.js"></script>
+<script>
+    const encrypt = ()=>{
+        document.getElementById('output').value = '';
+        const plaintext = document.getElementById('plaintext');
+        const shiftAmount = document.getElementById('shift_amount');
+        var result = '';
+        try{
+           result = caesarCipher(plaintext.value,parseInt(shiftAmount.value));
+        }
+        catch(err){
+
+        }
+        document.getElementById('output').value = result;
+    }
+    const decrypt = () => {
+        document.getElementById('output').value = '';
+        const plaintext = document.getElementById('plaintext');
+        const shiftAmount = document.getElementById('shift_amount');
+        var result = '';
+        try{
+           result = caesarCipher(plaintext.value,-parseInt(shiftAmount.value));
+        }
+        catch(err){
+
+        }
+        document.getElementById('output').value = result;
+    }
+    const copyText = ()=>{
+        var output = document.getElementById('output');
+        output.enabled = true;
+        output.select();
+        document.execCommand("copy");
+    }
+</script>
+</body>
+</html>
