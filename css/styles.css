@@ -1,0 +1,38 @@
+*{
+    margin:0px;
+    padding:0px;
+    font-size: 1rem;
+    font-weight: 100;
+    text-decoration: none;
+    font-family: 'Roboto Slab';
+    color:#ededed;
+}
+html{
+    background-color: #121212;
+}
+h1{
+    font-size:3rem;
+    text-align: center;
+    background-color: #202945;
+    padding:1em;
+}
+h2{
+    font-size:1.5em;
+    color:#A6C9FE;
+    margin-top: 1em;
+}
+#container{
+    margin:0 auto;
+    width:70%;
+    background-color: #000000;
+    padding:2em;
+}
+ul{
+    margin-left: 2em;
+}
+li{
+    margin-top:1em;
+}
+a{
+    text-decoration: underline;
+}
