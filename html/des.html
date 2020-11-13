@@ -4,24 +4,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DES(Data Encryption Standard)</title>
     <link rel="icon" href="../img/favicon.ico">
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-   <h1>DES(Data Encryption Standard)</h1> 
-   <div>
+   <h1 class="title">DES(Data Encryption Standard)</h1> 
+   <div id="container">
         <label for="plaintext">Message:</label>
         <input type="text" name = "plaintext" id="plaintext">
+        <br>
         <label for="key">Key:</label>
         <input type="text" name = "key" id="key">
-
-        <button onclick="encrypt()">Encrypt</button>
-        <button onclick="decrypt()">Decrypt</button>
-
+        <br>
         <textarea name="output" id="output" cols="30" rows="10" readonly></textarea>
-        <button onclick="copyText()">Copy</button>
+        <br>
+        <button class="encrypt_btn" onclick="encrypt()">Encrypt</button>
+        <button class="decrypt_btn" onclick="decrypt()">Decrypt</button>
+        <button class="copy_btn" onclick="copyText()">Copy</button>
+        <br>
+        <a id="back" href="../index.html">&larr; Back</a>
    </div>
-   <p><a href="../index.html">Back to home page</a></p>
+    <footer>&#169;<span id="year"></span> Mohamad Abou Harb</footer>
 <script src="../js/des.js"></script>
 <script>
+    document.getElementById('year').innerHTML = new Date().getFullYear()
     const encrypt = ()=>{
         document.getElementById('output').value = '';
         const plaintext = document.getElementById('plaintext');

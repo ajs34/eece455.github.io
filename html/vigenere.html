@@ -4,30 +4,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vigenere Cipher</title>
     <link rel="icon" href="../img/favicon.ico">
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-   <h1>Vigenere Cipher</h1> 
+   <h1 class="title">Vigenere Cipher</h1> 
+   <div id="container">
+ <div class="description">
    <p>This is a primitive cipher the basic idea of this cipher is that it performs a caesar cipher for each character of the key.  </p>
    <p>
         The cipher follows the following formulas for encryption and decryption:<br/>
         E(p,k) = (p+k) mod 26<br/>
         D(c,k) = (c-k) mod 26
    </p>   
-   <div>
+
+        </div>    
         <label for="plaintext">Message:</label>
         <input type="text" name = "plaintext" id="plaintext">
+        <br>
         <label for="key">Key:</label>
         <input type="text" name = "key" id="key">
-
-        <button onclick="encrypt()">Encrypt</button>
-        <button onclick="decrypt()">Decrypt</button>
-
+        <br>
         <textarea name="output" id="output" cols="30" rows="10" readonly></textarea>
-        <button onclick="copyText()">Copy</button>
+        <br>
+        <button class="encrypt_btn" onclick="encrypt()">Encrypt</button>
+        <button class="decrypt_btn" onclick="decrypt()">Decrypt</button>
+        <button class="copy_btn" onclick="copyText()">Copy</button>
+        <br>
+        <a id="back" href="../index.html">&larr; Back</a>
+
    </div>
-   <p><a href="../index.html">Back to home page</a></p>
+    <footer>&#169;<span id="year"></span> Mohamad Abou Harb</footer>
 <script src="../js/classic.js"></script>
 <script>
+    document.getElementById('year').innerHTML = new Date().getFullYear()
     const encrypt = ()=>{
         document.getElementById('output').value = '';
         const plaintext = document.getElementById('plaintext');
