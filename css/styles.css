@@ -10,14 +10,14 @@
 html{
     background-color: #121212;
 }
-h1{
+.title{
     font-size:3rem;
     text-align: center;
     font-weight: bold;
     background-color: #202945;
     padding:1em;
 }
-h2{
+.sub_heading{
     margin-bottom: 1rem;
     font-size:1.5em;
     font-weight: bold;
@@ -26,6 +26,7 @@ h2{
 }
 #container{
     margin:0 auto;
+    margin-bottom: 5rem;
     width:80%;
     background-color: #000000;
     padding:2em;
@@ -48,8 +49,12 @@ a{
     text-decoration: underline;
     color:#EBE9EA;
 }
+body{
+    margin-bottom: 1rem;
+}
 footer{
     position: fixed;
+    margin-top: 1rem;
     left:0;
     bottom: 0;
     width: 100%;
@@ -58,4 +63,65 @@ footer{
     font-size:1rem;
     text-align: center;
     padding: 2em;
+}
+.description{
+    background-color:#121212;
+    border-radius: 5px;
+    padding: 1rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+}
+label{
+    display: inline-block;
+    min-width: 80px;
+}
+input[type=text]{
+    background-color: black;
+    border:1px solid black;
+    border-bottom: 1px solid white;
+    caret-color: white;
+    margin-bottom: 1rem;
+    color:white;
+}
+#output{
+    background-color: #121212;
+    border-radius: 5px;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+}
+button{
+    color:black;
+    padding: 1rem;
+    font-weight: bold;
+    border:none;
+    border-radius: 5px;
+    min-width: 80px;
+    max-width: 100px;
+    margin-bottom: 2rem;
+}
+button:hover{
+    cursor: pointer;
+    border:1px solid white;
+}
+.encrypt_btn{
+    background-color: rgb(232, 101, 93);
+}
+.decrypt_btn{
+    background-color: #A6C9FE;
+}
+.copy_btn{
+    background-color: rgb(159, 196, 144);
+}
+.encrypt_btn:hover{
+    background-color:#db5046;
+}
+.decrypt_btn:hover{
+    background-color: #3e69b4;
+}
+.copy_btn:hover{
+    background-color:#86c76c;
+}
+#back{
+    text-decoration: none;
 }

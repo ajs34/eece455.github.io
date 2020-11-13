@@ -4,32 +4,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Caesar Cipher</title>
     <link rel="icon" href="../img/favicon.ico">
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-   <h1>Caesar Cipher</h1> 
-   <p>This is a primitive cipher the basic idea of this cipher is to shift the input characters of the plaintext 
-       by the shift amount.
-   </p>
-   <p>
-        The cipher follows the following formulas for encryption and decryption:<br/>
-        E(p,n) = (p+n) mod 26<br/>
-        D(c,n) = (c-n) mod 26
-   </p>   
-   <div>
+   <h1 class="title">Caesar Cipher</h1> 
+   <div id="container">
+       <div class="description">
+        <p>This is a primitive cipher the basic idea of this cipher is to shift the input characters of the plaintext 
+            by the shift amount.
+        </p>
+        <p>
+                The cipher follows the following formulas for encryption and decryption:<br/>
+                E(p,n) = (p+n) mod 26<br/>
+                D(c,n) = (c-n) mod 26
+        </p>   
+
+       </div>
         <label for="plaintext">Message:</label>
         <input type="text" name = "plaintext" id="plaintext">
-        <label for="shift_amount">Shift Amount:</label>
+        <br/>
+        <label for="shift_amount">Shift:</label>
         <input type="text" name = "shift_amount" id="shift_amount">
+        <br/>
+        <div id="controls">
+         <textarea name="output" id="output" cols="30" rows="10" readonly></textarea>
+        <br>
+        <button class="encrypt_btn" onclick="encrypt()">Encrypt</button>
+        <button class = "decrypt_btn"onclick="decrypt()">Decrypt</button>
+        <button class ="copy_btn" onclick="copyText()">Copy</button>
+        <br>
+        <a id="back" href="../index.html">&larr; Back</a>
 
-        <button onclick="encrypt()">Encrypt</button>
-        <button onclick="decrypt()">Decrypt</button>
-
-        <textarea name="output" id="output" cols="30" rows="10" readonly></textarea>
-        <button onclick="copyText()">Copy</button>
+        </div>
    </div>
-   <p><a href="../index.html">Back to home page</a></p>
 <script src="../js/classic.js"></script>
+    <footer>&#169;<span id="year"></span> Mohamad Abou Harb</footer>
 <script>
+    document.getElementById('year').innerHTML = new Date().getFullYear()
     const encrypt = ()=>{
         document.getElementById('output').value = '';
         const plaintext = document.getElementById('plaintext');
