@@ -7,8 +7,13 @@
     font-family: 'Roboto Slab';
     color:#EBE9EA;
 }
+
 html{
     background-color: #121212;
+}
+#sub_title{
+    font-size:1.25rem;
+    color: orange;
 }
 .title{
     font-size:3rem;
