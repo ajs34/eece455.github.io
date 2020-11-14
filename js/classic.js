@@ -62,24 +62,23 @@ const affineCipherDecrypt = (cipher, a, b) => {
 };
 const vigenereCipherEncrypt = (plaintext, key) => {
   let x = plaintext.length;
-  let cipher = '';
+  let cipher = "";
   plaintext = plaintext.toUpperCase();
   key = key.toUpperCase();
-  if(key.length < plaintext.length){
-  for (let i = 0; ; i++) {
-    if (x == i) i = 0;
-    if (key.length == plaintext.length) break;
-    key += key[i];
+  if (key.length < plaintext.length) {
+    for (let i = 0; ; i++) {
+      if (x == i) i = 0;
+      if (key.length == plaintext.length) break;
+      key += key[i];
+    }
   }
-}
   for (let i = 0; i < plaintext.length; i++) {
     if (plaintext[i].match(/[a-z]/i) && key[i].match(/[a-z]/i)) {
       let out = (plaintext[i].charCodeAt(0) + key[i].charCodeAt(0)) % 26;
-      out += 'A'.charCodeAt(0);
+      out += "A".charCodeAt(0);
       cipher += String.fromCharCode(out);
-    }
-    else{
-      cipher+=plaintext[i];
+    } else {
+      cipher += plaintext[i];
     }
   }
   return cipher;
@@ -87,24 +86,23 @@ const vigenereCipherEncrypt = (plaintext, key) => {
 
 const vigenereCipherDecrypt = (ciphertext, key) => {
   let x = ciphertext.length;
-  let plaintext = '';
-  ciphertext= ciphertext.toUpperCase();
+  let plaintext = "";
+  ciphertext = ciphertext.toUpperCase();
   key = key.toUpperCase();
-  if(key.length < plaintext.length){
-  for (let i = 0; ; i++) {
-    if (x == i) i = 0;
-    if (key.length == ciphertext.length) break;
-    key += key[i];
+  if (key.length < ciphertext.length) {
+    for (let i = 0; ; i++) {
+      if (x == i) i = 0;
+      if (key.length == ciphertext.length) break;
+      key += key[i];
+    }
   }
-}
   for (let i = 0; i < ciphertext.length; i++) {
     if (ciphertext[i].match(/[a-z]/i) && key[i].match(/[a-z]/i)) {
-      let out = (ciphertext[i].charCodeAt(0) - key[i].charCodeAt(0)+26) % 26;
-      out += 'A'.charCodeAt(0);
-      plaintext+= String.fromCharCode(out);
-    }
-    else{
-      plaintext+=ciphertext[i];
+      let out = (ciphertext[i].charCodeAt(0) - key[i].charCodeAt(0) + 26) % 26;
+      out += "A".charCodeAt(0);
+      plaintext += String.fromCharCode(out);
+    } else {
+      plaintext += ciphertext[i];
     }
   }
   return plaintext;
