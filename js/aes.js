@@ -12,6 +12,51 @@ function transpose(a){
   }
   return t;
 }
+function arrayRotate(arr, reverse) {
+    if (reverse) arr.unshift(arr.pop());
+    else arr.push(arr.shift());
+    return arr;
+}
+
+function circularLeftShift(arr,amount,reverse){
+    let output = arr
+    for(let i = 0; i < amount;i++){
+        output = arrayRotate(output,reverse)
+    }
+    return output
+}
+
+function multiplyByX(p1){
+    if (p1[0] == '0')
+        return circularLeftShift(p1.split(''),1).join('')
+    else if (p1[0] == '1'){
+        let p2 = p1
+        p2 = '0' + p2.substring(1)
+        p2 = circularLeftShift(p2.split(''),1).join('')
+        return stringxor(p2,'00011011')
+    }
+}
+function multiplyByXPowerN(p1,n){
+    let answer = p1
+    for(let i = 0; i < n;i++){
+        answer = multiplyByX(answer)
+    }
+    return answer
+}
+function multiply(p1,p2){
+    if(p2 == '00000000')
+        return '00000000'
+    let out = []
+    let i = p1.length -1
+    for(let j = 0; j < p1.length;j++){
+       if(p2[j] == '1')
+            out.push(multiplyByXPowerN(p1,i))
+       i--
+    }
+    const reducer = (p1,p2) => stringxor(p1,p2)
+    let answer = out.reduce(reducer)
+    return answer
+}
 function chunkstring(str, length) {
   return str.match(new RegExp(".{1," + length + "}", "g"));
 }
@@ -58,6 +103,18 @@ function hexXOR(h1,h2){
     let b2 = hex2bin(h2)
     let result = stringxor(b1,b2)
     return bin2hex(result)
+}
+function hexMultiply(h1,h2){
+    let b1 = hex2bin(h1)
+    let b2 = hex2bin(h2)
+    return bin2hex(multiply(b1,b2))
+}
+function arrayXOR(arr1,arr2){
+    let out = []
+    for (let i = 0; i < arr1.length; i++) {
+        out.push(hexXOR(arr1[i],arr2[i]))
+    }
+    return out
 }
 class AES{
     constructor(msg,key){
@@ -138,8 +195,155 @@ class AES{
         }
         return output
     }
+    byteSub(state,inverse=false){
+        let sbox = (inverse)?this.invsbox:this.sbox
+        let output = []
+        for(let i = 0; i<state.length;i++){
+            output.push([])
+            for(let j = 0;j < state.length;j++){
+                let row = parseInt(state[i][j][0],16)
+                let col = parseInt(state[i][j][1],16)
+                output[i].push(sbox[row][col])
+            }
+        }
+        return output
+    }
+    shiftRows(state,inverse){
+        let output = []
+        for (let index = 0; index < state.length; index++) {
+            const element = state[index];
+            output.push(circularLeftShift(state[index],index,inverse)) 
+        }
+        return state
+    }
+    mixColumns(state,inverse=false){
+        let mcols = (inverse)?this.invMCols:this.mCols
+        let output = [
+            ['00','00','00','00'],
+            ['00','00','00','00'],
+            ['00','00','00','00'],
+            ['00','00','00','00']
+                ]
+        for(let i = 0;i<state.length;i++) {
+            for(let j = 0;j < state.length;j++){
+               for(let k = 0; k < state.length;k++){
+                    let product = hexMultiply(mcols[i][k],state[k][j])
+                    output[i][j] = hexXOR(output[i][j],product)
+               }
+            }
+        }
+        return output
+    }
+    generateKeys(key){
+        let kMatrix = transpose(this.key)
+        let w = [kMatrix[0],kMatrix[1],kMatrix[2],kMatrix[3]]
+        let x = 0
+        for(let i = 4; i<44;i++){
+            let temp = w[i-1].map((x)=>x)
+            if(i%4 == 0){
+                temp = circularLeftShift(temp,1)
+                temp.forEach((elem,i,temp)=>{
+                    let row  = parseInt(elem[0],16)     
+                    let col = parseInt(elem[1],16)
+                    temp[i] = this.sbox[row][col]
+                }
+              )
+                temp[0] = hexXOR(temp[0],this.rcon[x])
+                x++
+            }
+            w.push(arrayXOR(temp,w[i-4]))
+        }
+        let out = []
+        for(let i = 0;i < w.length-3;i++){
+            if(i%4 == 0)
+                out.push(transpose([w[i],w[i+1],w[i+2],w[i+3]]))
+        }
+        return out
+    }
+    logMatrixToSteps(matrix){
+        this.steps += '\n'
+        for(let i = 0;i<matrix.length;i++){
+            for(let j = 0;j < matrix.length;j++){
+                this.steps += `${matrix[i][j]} `    
+            }
+            this.steps += '\n'
+        }
+        this.steps += '\n'
+    }
+    encrypt(){
+        let keys = this.generateKeys(this.key) 
+        let msg = this.state
+
+        this.steps += `Starting Encryption:\n`
+        this.steps += `Intial State:`
+        this.logMatrixToSteps(msg)
+
+        this.steps += `Intial Key:`
+        this.logMatrixToSteps(keys[0])
+
+        this.steps += `After Intial Add Round Key:`
+        msg = this.addRoundKey(msg,keys[0])
+        this.logMatrixToSteps(msg)
+
+        for(let i = 1;i<11;i++){
+            this.steps += `After Byte Sub:`
+            msg = this.byteSub(msg)
+            this.logMatrixToSteps(msg)
+
+            this.steps +=`After Shift Rows:`
+            msg = this.shiftRows(msg)
+            this.logMatrixToSteps(msg)
+
+            if(i != 10){
+                this.steps += `After Mix Columns:`
+                msg = this.mixColumns(msg)
+                this.logMatrixToSteps(msg)
+            }
+            this.steps += `Key ${i}:`
+            this.logMatrixToSteps(keys[i])
+            this.steps += `After Add Round Key ${i}`
+            msg = this.addRoundKey(msg,keys[i])
+            this.logMatrixToSteps(msg)
+        }
+        return msg
+    }
+    decrypt(){
+        let keys = this.generateKeys(this.key).reverse() 
+        let msg = this.state
+
+        this.steps += `Starting Decryption:\n`
+        this.steps += `Intial State:`
+        this.logMatrixToSteps(msg)
+
+        this.steps += `Intial Key:`
+        this.logMatrixToSteps(keys[0])
+
+        this.steps += `After Intial Add Round Key:`
+        msg = this.addRoundKey(msg,keys[0])
+        this.logMatrixToSteps(msg)
+
+        for(let i = 1;i<11;i++){
+            this.steps +=`After Inverse Shift Rows:`
+            msg = this.shiftRows(msg,true)
+            this.logMatrixToSteps(msg)
+
+            this.steps += `After Inverse Byte Sub:`
+            msg = this.byteSub(msg,true)
+            this.logMatrixToSteps(msg)
+
+            this.steps += `Key ${i}:`
+            this.logMatrixToSteps(keys[i])
+            this.steps += `After Add Round Key ${i}`
+            msg = this.addRoundKey(msg,keys[i])
+            this.logMatrixToSteps(msg)
+
+            if(i != 10){
+                this.steps += `After Inverse Mix Columns:`
+                msg = this.mixColumns(msg,true)
+                this.logMatrixToSteps(msg)
+            }
+        }
+        return msg
+
+    }
 }
-key = '5468617473206D79204B756E67204675'
-msg = '54776F204F6E65204E696E652054776F'
-let aes = new AES(msg,key)
-aes.addRoundKey(aes.state,aes.key)
