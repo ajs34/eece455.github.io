@@ -1,0 +1,77 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AES(Advanced Encryption Standard)</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="../img/favicon.ico" />
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <h1 class="title">AES(Advanced Encryption Standard)</h1>
+    <div id="container">
+      <label for="plaintext">Message:</label>
+      <input type="text" name="plaintext" id="plaintext" />
+      <br />
+      <label for="key">Key:</label>
+      <input type="text" name="key" id="key" />
+      <br />
+      <textarea
+        name="output"
+        id="output"
+        cols="30"
+        rows="10"
+        readonly
+      ></textarea>
+      <br />
+      <button class="encrypt_btn" onclick="encrypt()">Encrypt</button>
+      <button class="decrypt_btn" onclick="decrypt()">Decrypt</button>
+      <button class="copy_btn" onclick="copyText()">Copy</button>
+      <br />
+      <a id="back" href="../index.html">&larr; Back</a>
+    </div>
+    <footer>&#169;<span id="year"></span> Mohamad Abou Harb</footer>
+    <script src="../js/aes.js"></script>
+    <script>
+      document.getElementById("year").innerHTML = new Date().getFullYear();
+      const encrypt = () => {
+        document.getElementById("output").value = "";
+        const plaintext = document.getElementById("plaintext");
+        const key = document.getElementById("key");
+        var result = "";
+        try {
+          let aes= new AES(plaintext.value, key.value);
+          aes.encrypt();
+          result = aes.steps;
+        } catch (err) {
+          console.log(err);
+        }
+        document.getElementById("output").value = result;
+      };
+      const decrypt = () => {
+        document.getElementById("output").value = "";
+        const plaintext = document.getElementById("plaintext");
+        const key = document.getElementById("key");
+        var result = "";
+        try {
+          let aes = new AES(plaintext.value, key.value);
+          aes.decrypt();
+          result = aes.steps;
+        } catch (err) {
+          console.log(err);
+        }
+        document.getElementById("output").value = result;
+      };
+      const copyText = () => {
+        var output = document.getElementById("output");
+        output.enabled = true;
+        output.select();
+        document.execCommand("copy");
+      };
+    </script>
+  </body>
+</html>
