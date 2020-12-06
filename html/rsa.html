@@ -1,0 +1,106 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RSA</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="../img/favicon.ico" />
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <h1 class="title">RSA</h1>
+    <div id="container">
+      <div class="description">
+          <p>RSA is a public key cryptography algorithm
+              where a user generates a pair of prime numbers and then uses these
+              prime numbers to generate pubnlic and private key pairs which are used
+              in the encryption/decryption process of the algorithm. 
+          </p>
+
+          <ul>
+              <li>C = M^e mod n</li>
+              <li>M = C^d mod n</li>
+          </ul>
+          <p>Please note I am using numbers for my implementation.
+              So for the msg input provide a single number likewise for p,q,e/d.
+          </p>
+          <p>
+              Also worth noting, I didn't check if p and q are primes this is left for the user to generate, likewise for e/d. 
+          </p>
+      </div>
+      
+      <label for="msg">msg:</label>
+      <input type="text" name="N" id="msg" />
+      <br />
+
+      <label for="p">p:</label>
+      <input type="text" name="N" id="p" />
+      <br />
+
+      <label for="q">q</label>
+      <input type="text" name="q" id="q" />
+      <br />
+
+      <label for="e">e/d:</label>
+      <input type="text" name="e" id="e" />
+      <br />
+
+
+      <div id="controls">
+        <textarea
+          name="output"
+          id="output"
+          cols="30"
+          rows="10"
+          readonly
+        ></textarea>
+        <br />
+        <button class="encrypt_btn" onclick="encrypt()">Encrypt</button>
+        <button class="decrypt_btn" onclick = "encrypt()">Decrypt</button>
+        <button class="copy_btn" onclick="copyText()">Copy</button>
+        <br />
+
+        <a id="back" href="../index.html">&larr; Back</a>
+      </div>
+    </div>
+    <script src="../js/rsa.js"></script>
+    <footer>&#169;<span id="year"></span> Mohamad Abou Harb</footer>
+    <script>
+      document.getElementById("year").innerHTML = new Date().getFullYear();
+      const encrypt = ()=>{
+        try {
+            let p = parseInt(document.getElementById("p").value)
+            let q = parseInt(document.getElementById("q").value)
+            let e = parseInt(document.getElementById("e").value)
+            let m = parseInt(document.getElementById("msg").value)
+            document.getElementById('output').value = rsaEncrypt(p,q,e,m)
+
+        } catch (error) {
+            console.log(error)
+        }
+      }
+      const decrypt = ()=>{
+        try {
+            let p = parseInt(document.getElementById("p").value)
+            let q = parseInt(document.getElementById("q").value)
+            let e = parseInt(document.getElementById("e").value)
+            let m = parseInt(document.getElementById("m").value)
+            document.getElementById('output').value = rsaDecrypt(p,q,e,m)
+
+        } catch (error) {
+            console.log(error)
+        }
+      }
+      const copyText = () => {
+        var output = document.getElementById("output");
+        output.enabled = true;
+        output.select();
+        document.execCommand("copy");
+      };
+    </script>
+  </body>
+</html>
