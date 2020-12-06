@@ -53,11 +53,50 @@ const millerRabin = (n) => {
     return steps
 }
 
-const chineseRemainderTheorem = (M,m)=>{
-    mArr = m.split(',')
-    MArr = []
-    mArr.forEach(m => {
+const inverseMod = (a, m) => { 
+    a = a % m
+    for(let x = 1; x < m; x++){
+        if((a*x)%m == 1)
+            return x
+    }
+    return "No Inverse"
+ }
 
-    })
-    console.log(mArr)
+const chineseRemainderTheorem = (a,b)=>{
+   let steps = '' 
+   a = a.split(',').map(x => +x)
+   b = b.split(',').map(x => +x)
+   let M = b.reduce((product,num)=>{
+        return product*num
+   })
+   for(let i = 0; i < a.length;i++){
+       steps += `M${i} = ${M}/${b[i]}\n`
+   }
+   let mArr = []
+   let mInverseArr = []
+   let cArr = []
+   let x = 0
+   b.forEach(elem =>{
+       mArr.push(M/elem)
+   })
+   mArr.forEach((elem,idx)=>{
+       mInverseArr.push(inverseMod(elem,b[idx]))
+   })
+   mInverseArr.forEach((elem,idx)=>{
+       cArr.push(elem*mArr[idx])
+   })
+   for(let i = 0; i < a.length;i++){
+       steps += `M^(-1)${i} = ${mArr[i]}^(-1) mod ${b[i]} = ${mInverseArr[i]} \n`
+   }
+   for(let i = 0; i < a.length;i++){
+       steps += `C${i} = ${mInverseArr[i]} * ${b[i]} = ${cArr[i]}\n`
+   }
+   steps += 'X = '
+   a.forEach((elem,idx)=>{
+      steps += `${elem}*${cArr[idx]} + ` 
+      x += elem*cArr[idx] 
+   })
+   steps = steps.slice(0,-2)
+   steps += `mod ${M} = ${x%M}\n`
+   return steps
 }

@@ -1,0 +1,75 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chinese Remainder Therom</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="../img/favicon.ico" />
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <h1 class="title">Chinese Remainder Therom</h1>
+    <div id="container">
+      <div class="description">
+        <p>Solves system of linear congruential equations</p>
+        <p>When inputing your values please provide a comma seperated list for inputs ex: </p>
+        <ul>
+            <li> x = 2 mod 3</li>
+            <li> x = 3 mod 5</li>
+            <li> x = 2 mod 7</li>
+        </ul>
+        <p>For the above input you would put the following in the a field 2,3,2 and as for b you would put
+            3,5,7
+        </p>
+      </div>
+      
+      <label for="a">a:</label>
+      <input type="text" name="a" id="a" />
+      <br />
+
+      <label for="b">b:</label>
+      <input type="text" name="b" id="b" />
+      <br />
+
+      <div id="controls">
+        <textarea
+          name="output"
+          id="output"
+          cols="30"
+          rows="10"
+          readonly
+        ></textarea>
+        <br />
+        <button class="encrypt_btn" onclick="solve()">Solve</button>
+        <button class="copy_btn" onclick="copyText()">Copy</button>
+        <br />
+
+        <a id="back" href="../index.html">&larr; Back</a>
+      </div>
+    </div>
+    <script src="../js/numberTheory.js"></script>
+    <footer>&#169;<span id="year"></span> Mohamad Abou Harb</footer>
+    <script>
+      document.getElementById("year").innerHTML = new Date().getFullYear();
+      const solve = ()=>{
+        try {
+            let a = document.getElementById("a").value 
+            let b = document.getElementById("b").value 
+            document.getElementById("output").value = chineseRemainderTheorem(a,b)
+        } catch (error) {
+            console.log(error)
+        }
+      }
+      const copyText = () => {
+        var output = document.getElementById("output");
+        output.enabled = true;
+        output.select();
+        document.execCommand("copy");
+      };
+    </script>
+  </body>
+</html>
