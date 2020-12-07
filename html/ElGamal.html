@@ -1,0 +1,79 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ElGamal</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="../img/favicon.ico" />
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <h1 class="title">ElGamal</h1>
+    <div id="container">
+      <div class="description">
+        <p>Public key crypto algorithm based on diffie hellman</p>
+      </div>
+      
+      <label for="a">a:</label>
+      <input type="text" name="a" id="a" />
+      <br />
+      <label for="q">q:</label>
+      <input type="text" name="q" id="q" />
+      <br />
+      <label for="xa">xa:</label>
+      <input type="text" name="xa" id="xa" />
+      <br />
+      <label for="r">r:</label>
+      <input type="text" name="r" id="r" />
+      <br />
+      <label for="m">m:</label>
+      <input type="text" name="m" id="m" />
+      <br />
+
+
+      <div id="controls">
+        <textarea
+          name="output"
+          id="output"
+          cols="30"
+          rows="10"
+          readonly
+        ></textarea>
+        <br />
+        <button class="encrypt_btn" onclick="solve()">Solve</button>
+        <button class="copy_btn" onclick="copyText()">Copy</button>
+        <br />
+
+        <a id="back" href="../index.html">&larr; Back</a>
+      </div>
+    </div>
+    <script src="../js/elgamal.js"></script>
+    <footer>&#169;<span id="year"></span> Mohamad Abou Harb</footer>
+    <script>
+      document.getElementById("year").innerHTML = new Date().getFullYear();
+      const solve = ()=>{
+        try {
+            let a = parseInt(document.getElementById("a").value)
+            let q = parseInt(document.getElementById("q").value)
+            let xa = parseInt(document.getElementById("xa").value)
+            let r = parseInt(document.getElementById("r").value)
+            let m = parseInt(document.getElementById("m").value)
+            document.getElementById('output').value = elGamal(a,q,xa,r,m)
+
+        } catch (error) {
+            console.log(error)
+        }
+      }
+      const copyText = () => {
+        var output = document.getElementById("output");
+        output.enabled = true;
+        output.select();
+        document.execCommand("copy");
+      };
+    </script>
+  </body>
+</html>
