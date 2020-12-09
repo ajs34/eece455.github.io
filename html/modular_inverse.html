@@ -1,0 +1,66 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modular Inverse</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="../img/favicon.ico" />
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <h1 class="title">Modular Inverse</h1>
+    <div id="container">
+      <div class="description">
+          <p>Computes the inverse of a number in a given modular field.</p>
+      </div>
+      
+      <label for="n">n</label>
+      <input type="text" name="N" id="n" />
+      <br />
+
+      <label for="n">m</label>
+      <input type="text" name="N" id="m" />
+      <br />
+
+      <div id="controls">
+        <textarea
+          name="output"
+          id="output"
+          cols="30"
+          rows="10"
+          readonly
+        ></textarea>
+        <br />
+        <button class="decrypt_btn" onclick = "find()">Find</button>
+        <button class="copy_btn" onclick="copyText()">Copy</button>
+        <br />
+
+        <a id="back" href="../index.html">&larr; Back</a>
+      </div>
+    </div>
+    <script src="../js/numberTheory.js"></script>
+    <footer>&#169;<span id="year"></span> Mohamad Abou Harb</footer>
+    <script>
+      document.getElementById("year").innerHTML = new Date().getFullYear();
+      const find = ()=>{
+        try {
+           let n = parseInt(document.getElementById("n").value)
+           let m = parseInt(document.getElementById("m").value)
+           document.getElementById("output").value = inverseMod(n,m)
+        } catch (error) {
+            
+        }
+      }
+      const copyText = () => {
+        var output = document.getElementById("output");
+        output.enabled = true;
+        output.select();
+        document.execCommand("copy");
+      };
+    </script>
+  </body>
+</html>
