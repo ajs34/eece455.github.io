@@ -37,4 +37,15 @@ const inverseMod = (a, m) => {
     steps += `M = C2 K^-1 mod q = ${c2}.${kInverse} mod ${q} = ${modularExponentation(c2*kInverse,1,q)}\n`
     return steps
  }
- elGamal(10,19,5,6,17)
+
+ const elGamalPublic = (a,q,y,r,m)=>{
+     let k = modularExponentation(y,r,q)
+     let steps = ''
+     steps += `k = y^r mod q = ${y}^${r} mod ${q} = ${k}\n`
+     let c1 = modularExponentation(a,r,q)
+     steps += `C1 = a^r mod q = ${a}^${r} mod ${q} = ${c1}\n`
+     let c2 = modularExponentation(k*m,1,q)
+     steps += `C2 = MK mod q = ${m*k} mod ${q} = ${c2}\n`
+     console.log(steps)
+ }
+ elGamalPublic(7,71,3,2,30)

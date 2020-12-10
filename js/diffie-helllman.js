@@ -20,3 +20,19 @@ const diffieHellman = (q,a,xa,xb) =>{
     steps += `KAB = yb^xa mod q = ya^xb mod q = ${kab}\n`
     return steps
 }
+
+const discreeteLog = (a,b,m) =>{
+    if(a >= m)
+        return "Does not exist"
+    for(let i = 0; i <= m; i++){
+        if(modularExponentation(b,i,m) == a)
+            return i
+    }
+    return "Does not exist"
+}
+
+const bruteForcePrivateKey = (y,a,q)=>{
+    //finds private key given public
+    return discreeteLog(y,a,q)
+
+}
