@@ -100,3 +100,12 @@ const chineseRemainderTheorem = (a,b)=>{
    steps += `mod ${M} = ${x%M}\n`
    return steps
 }
+const discreeteLog = (a,b,m) =>{
+    if(a >= m)
+        return "Does not exist"
+    for(let i = 0; i <= m; i++){
+        if(modularExponentation(b,i,m) == a)
+            return i
+    }
+    return "Does not exist"
+}
