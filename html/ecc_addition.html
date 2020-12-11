@@ -1,0 +1,90 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eliptic Curve Addition</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="../img/favicon.ico" />
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <h1 class="title">Eliptic Curve Addition</h1>
+    <div id="container">
+      <div class="description">
+        <p>This will add two points on a given eliptic curve.</p>
+      </div>
+      
+      <label for="a">a:</label>
+      <input type="text" name="a" id="a" />
+      <br />
+
+      <label for="b">b:</label>
+      <input type="text" name="b" id="b" />
+      <br />
+
+      <label for="p">p:</label>
+      <input type="text" name="p" id="p" />
+      <br />
+
+      <label for="x1">x1:</label>
+      <input type="text" name="x1" id="x1" />
+      <br />
+      <label for="y1">y1:</label>
+      <input type="text" name="y1" id="y1" />
+      <br />
+
+      <label for="x2">x2</label>
+      <input type="text" name="x2" id="x2" />
+      <br />
+      <label for="y2">y2:</label>
+      <input type="text" name="y2" id="y2" />
+      <br />
+
+      <div id="controls">
+        <textarea
+          name="output"
+          id="output"
+          cols="30"
+          rows="10"
+          readonly
+        ></textarea>
+        <br />
+        <button class="encrypt_btn" onclick="solve()">Add</button>
+        <button class="copy_btn" onclick="copyText()">Copy</button>
+        <br />
+
+        <a id="back" href="../index.html">&larr; Back</a>
+      </div>
+    </div>
+    <script src="../js/ecc.js"></script>
+    <footer>&#169;<span id="year"></span> Mohamad Abou Harb</footer>
+    <script>
+      document.getElementById("year").innerHTML = new Date().getFullYear();
+      const solve = ()=>{
+        try {
+            let a = parseInt(document.getElementById("a").value)
+            let b = parseInt(document.getElementById("b").value)
+            let p = parseInt(document.getElementById("p").value)
+            let x1 = parseInt(document.getElementById("x1").value)
+            let y1 = parseInt(document.getElementById("y1").value)
+            let x2 = parseInt(document.getElementById("x2").value)
+            let y2 = parseInt(document.getElementById("y2").value)
+
+            document.getElementById("output").value = addPoints(a,b,p,x1,y1,x2,y2)
+        } catch (error) {
+            console.log(error)
+        }
+      }
+      const copyText = () => {
+        var output = document.getElementById("output");
+        output.enabled = true;
+        output.select();
+        document.execCommand("copy");
+      };
+    </script>
+  </body>
+</html>

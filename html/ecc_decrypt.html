@@ -1,0 +1,93 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eliptic Curve Decryption</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="../img/favicon.ico" />
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <h1 class="title">Eliptic Curve Decryption</h1>
+    <div id="container">
+      <div class="description">
+        <p>Dencrypts a point on a given Eliptic Curve.</p>
+      </div>
+      
+      <label for="a">a:</label>
+      <input type="text" name="a" id="a" />
+      <br />
+
+      <label for="b">b:</label>
+      <input type="text" name="b" id="b" />
+      <br />
+
+      <label for="p">p:</label>
+      <input type="text" name="p" id="p" />
+      <br />
+
+      <label for="gx">cmx1:</label>
+      <input type="text" name="gx" id="gx" />
+      <br />
+      <label for="gy">cmy1:</label>
+      <input type="text" name="gy" id="gy" />
+      <br />
+
+      <label for="pmx">cmx2:</label>
+      <input type="text" name="pmx" id="pmx" />
+      <br />
+      <label for="pmy">cmy2:</label>
+      <input type="text" name="pmy" id="pmy" />
+      <br />
+      <label for="n">n:</label>
+      <input type="text" name="n" id="n" />
+      <br />
+      <div id="controls">
+        <textarea
+          name="output"
+          id="output"
+          cols="30"
+          rows="10"
+          readonly
+        ></textarea>
+        <br />
+        <button class="decrypt_btn" onclick="solve()">Decrypt</button>
+        <button class="copy_btn" onclick="copyText()">Copy</button>
+        <br />
+
+        <a id="back" href="../index.html">&larr; Back</a>
+      </div>
+    </div>
+    <script src="../js/ecc.js"></script>
+    <footer>&#169;<span id="year"></span> Mohamad Abou Harb</footer>
+    <script>
+      document.getElementById("year").innerHTML = new Date().getFullYear();
+      const solve = ()=>{
+        try {
+            let a = parseInt(document.getElementById("a").value)
+            let b = parseInt(document.getElementById("b").value)
+            let p = parseInt(document.getElementById("p").value)
+            let gx = parseInt(document.getElementById("gx").value)
+            let gy = parseInt(document.getElementById("gy").value)
+            let pmx = parseInt(document.getElementById("pmx").value)
+            let pmy = parseInt(document.getElementById("pmy").value)
+            let n = parseInt(document.getElementById("n").value)
+
+            document.getElementById("output").value = decrypt(a,b,p,gx,gy,pmx,pmy,n)
+        } catch (error) {
+            console.log(error)
+        }
+      }
+      const copyText = () => {
+        var output = document.getElementById("output");
+        output.enabled = true;
+        output.select();
+        document.execCommand("copy");
+      };
+    </script>
+  </body>
+</html>
