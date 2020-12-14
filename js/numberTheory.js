@@ -3,7 +3,6 @@ const gcd = (a,b)=>{
         return a
     return gcd(b,a % b)
 }
-
 const modularExponentation = (a,n,m)=>{
     //computes a^n mod m
     let b = n.toString(2)
